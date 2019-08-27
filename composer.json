@@ -20,15 +20,11 @@
             "email": "nurlan.bboy@gmail.com",
             "homepage": "https://nurlanrazak.github.io",
             "role": "Developer"
-        },
-        {
-            "name": "Alisher",
-            "email": "",
-            "homepage": "https://alishergani.github.io",
-            "role": "Developer"
         }
+
     ],
     "require": {
+        
     },
     "autoload": {
         "psr-4": {
