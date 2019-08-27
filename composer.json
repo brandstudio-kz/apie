@@ -2,8 +2,8 @@
     "name": "brandstudio/apie",
     "description": "BrandStudio Lumen api template",
     "keywords": [
-        "Laravel/Lumen",
-        "Laravel/Lumen api",
+        "Lumen",
+        "Lumen api",
         "Brandstudio"
     ],
     "license": "MIT",
@@ -20,11 +20,15 @@
             "email": "nurlan.bboy@gmail.com",
             "homepage": "https://nurlanrazak.github.io",
             "role": "Developer"
+        },
+        {
+            "name": "Alisher",
+            "email": "",
+            "homepage": "https://alishergani.github.io",
+            "role": "Developer"
         }
-
     ],
     "require": {
-        
     },
     "autoload": {
         "psr-4": {
