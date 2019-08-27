@@ -10,10 +10,10 @@ class ApieController extends Controller
 
     public function resource(Request $request)
     {
-        $model = $this->getModelName($request->table);
-        $class = $this->getModelPath($model);
+        $class_name = $this->getClassName($request->table);
+        $class = $this->getClassPath($class_name);
 
-        $this->validateModel($model, $class);
+        $this->validateModel($class_name, $class);
 
         $query = $class::apieQuery();
 
@@ -37,7 +37,7 @@ class ApieController extends Controller
         $data = [];
         $models = config('apie.models');
         foreach($models as $model) {
-            $class = $this->getModelPath($model);
+            $class = $this->getClassPath($model);
             $data[$model] = $class::LEVELS;
         }
 
@@ -51,12 +51,12 @@ class ApieController extends Controller
         }
     }
 
-    private function getModelPath(string $model) : string
+    private function getClassPath(string $model) : string
     {
         return config('apie.models_path') . $model;
     }
 
-    private function getModelName(string $name) : string
+    private function getClassName(string $name) : string
     {
         return studly_case(str_singular($name));
     }
