@@ -1,0 +1,56 @@
+{
+    "name": "brandstudio/apie",
+    "description": "BrandStudio Lumen api template",
+    "keywords": [
+        "Laravel/Lumen",
+        "Laravel/Lumen api",
+        "Brandstudio",
+    ],
+    "license": "MIT",
+    "homepage": "https://github.com/brandstudio-kz/apie",
+    "authors": [
+        {
+            "name": "Nurdaulet",
+            "email": "nurik9293709@gmail.com",
+            "homepage": "https://sarsenovz2z.github.io/",
+            "role": "Developer"
+        },
+        {
+            "name": "Nurlan",
+            "email": "nurlan.bboy@gmail.com",
+            "homepage": "https://nurlanrazak.github.io",
+            "role": "Developer"
+        },
+        {
+            "name": "Alisher",
+            "email": "",
+            "homepage": "https://alishergani.github.io",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+    },
+    "autoload": {
+        "psr-4": {
+            "BrandStudio\\Apie\\": "src"
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "config": {
+        "sort-packages": true,
+        "preferred-install": "dist"
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "BrandStudio\\Recaptcha\\ApieServiceProvider"
+            ]
+        },
+        "lumen": {
+            "providers": [
+                "BrandStudio\\Recaptcha\\ApieServiceProvider"
+            ]            
+        }
+    }
+}
