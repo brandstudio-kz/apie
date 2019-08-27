@@ -4,7 +4,7 @@
     "keywords": [
         "Laravel/Lumen",
         "Laravel/Lumen api",
-        "Brandstudio",
+        "Brandstudio"
     ],
     "license": "MIT",
     "homepage": "https://github.com/brandstudio-kz/apie",
@@ -50,7 +50,7 @@
         "lumen": {
             "providers": [
                 "BrandStudio\\Recaptcha\\ApieServiceProvider"
-            ]            
+            ]
         }
     }
 }
