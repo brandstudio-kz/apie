@@ -8,44 +8,57 @@ use Illuminate\Http\Request;
 class ApieController extends Controller
 {
 
-    const DEFAULT_LEVEL = 's';
-
     public function resource(Request $request)
     {
-        $class = 'App\\' . studly_case(str_singular($request->table));
+        $model = $this->getModelName($request->table);
+        $class = $this->getModelPath($model);
 
-        if (!class_exists($class)) {
-            return abort(400, "Invalid request class {$class} not found!");
-        }
+        $this->validateModel($model, $class);
 
-        $query = $class::query();
+        $query = $class::apieQuery();
 
-        $levels = $request->levels ?? self::DEFAULT_LEVEL;
+        $levels = $request->levels ?? config('apie.default_level');
+
+        $get_method = 'get';
 
         if ($request->id) {
             $query->where('id', $request->id);
+            $get_method = 'firstOrFail';
         }
 
         $query->level($levels);
 
         $per_page = $request->per_page ?? $query->count();
-        return $per_page>1 ? $query->paginate($per_page) : $query->get();
+        return $per_page>1 ? $query->paginate($per_page) : $query->{$get_method}();
     }
 
     public function documentation(Request $request)
     {
-        $data = [
-            'base_url' => 'http://api.only.local.com',
-            'info' => '',
-            'filter' => '',
-        ];
-
-        $models = ['Product', 'Category', 'Brand'];
+        $data = [];
+        $models = config('apie.models');
         foreach($models as $model) {
-            $data[$model] = ("App\\{$model}")::LEVELS;
+            $class = $this->getModelPath($model);
+            $data[$model] = $class::LEVELS;
         }
 
         return $data;
+    }
+
+    private function validateModel(string $model, string $class)
+    {
+        if (!class_exists($class) || !in_array($model, config('apie.models'))) {
+            return abort(400, "Invalid request class {$class} not found!");
+        }
+    }
+
+    private function getModelPath(string $model) : string
+    {
+        return config('apie.models_path') . $model;
+    }
+
+    private function getModelName(string $name) : string
+    {
+        return studly_case(str_singular($name));
     }
 
 }

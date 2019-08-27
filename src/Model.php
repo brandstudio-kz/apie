@@ -14,6 +14,11 @@ class Model extends OriginalModel
     private $level_attributes = [];
     private $level_relations = [];
 
+    public static function apieQuery()
+    {
+        return static::query();
+    }
+
     public function scopeLevel($query, string $levels, array $attributes = [])
     {
         $attributes = array_merge($attributes, $this->getLevelAttributeNames($levels[0]));
