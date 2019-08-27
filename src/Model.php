@@ -18,7 +18,6 @@ class Model extends OriginalModel
     {
         $attributes = array_merge($attributes, $this->getLevelAttributeNames($levels[0]));
         $relations = $this->getLevelRelationsQuery($levels);
-
         $query->select($attributes)->with($relations);
     }
 

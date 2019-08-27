@@ -11,6 +11,7 @@ class LumenApieServiceProvider extends ServiceProvider
     {
         $this->app->router->group([
             'namespace' => 'BrandStudio\Apie\Http\Controllers',
+            'prefix' => ''
         ], function ($router) {
             include __DIR__.'/routes/Lumen/apie.php';
         });
