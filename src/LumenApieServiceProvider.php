@@ -4,7 +4,7 @@ namespace BrandStudio\Apie;
 
 use Illuminate\Support\ServiceProvider;
 
-class ApieServiceProvider extends ServiceProvider
+class LumenApieServiceProvider extends ServiceProvider
 {
 
     public function register()
@@ -12,7 +12,7 @@ class ApieServiceProvider extends ServiceProvider
         $this->app->router->group([
             'namespace' => 'BrandStudio\Apie\Http\Controllers',
         ], function ($router) {
-            include __DIR__.'/routes/apie.php';
+            include __DIR__.'/routes/Lumen/apie.php';
         });
 
         $this->app->make('BrandStudio\Apie\Http\Controllers\ApieController');
