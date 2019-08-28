@@ -10,6 +10,15 @@ trait ApieModelTrait
         return static::query();
     }
 
+    public function scopeBeforeLevel($query, array $attributes, array $relations, array $relation_stack = [])
+    {
+        //
+    }
+
+    public function scopeAfterLevel($query, array $attributes, array $relations, array $relation_stack = [])
+    {
+        //
+    }
 
     public function scopeLevel($query, string $levels, array $relation_stack = [])
     {
@@ -20,7 +29,10 @@ trait ApieModelTrait
 
         $relations =$this->getApieLevelRelationsQuery($levels, $relation_stack);
 
-        $query->select($attributes)->with($relations);
+        $query->beforeLevel($attributes, $relations, $relation_stack)
+              ->select($attributes)
+              ->with($relations)
+              ->afterLevel($attributes, $relations, $relation_stack);
     }
 
     public static function getApieLevelsParsed() : array
@@ -74,11 +86,27 @@ trait ApieModelTrait
         $relations_query = [];
 
         foreach($relations as $relation) {
+
+            $relation_class = static::getApieClass($relation);
+
             $relation_key = [$this->getTable(), str_plural($relation)];
             sort($relation_key);
             $relation_key = implode('_', $relation_key);
+
             if (!in_array($relation_key, $relation_stack)) {
-                $relations_query[$relation] = function($query) use ($index, $levels, $relation_key, $relation_stack) {
+                $relations_query[$relation] = function($query) use ($index, $levels, $relation_key, $relation_stack, $relation_class) {
+
+                    $class_name = class_basename(static::class);
+
+                    $before_scope = "scopeBefore{$class_name}Relation";
+                    $after_scope = "scopeAfter{$class_name}Relation";
+                    $before = "before{$class_name}Relation";
+                    $after = "after{$class_name}Relation";
+
+                    if (class_exists($relation_class) && method_exists(new $relation_class, $before_scope)) {
+                        $query->{$before}();
+                    }
+
                     $query->level(
                         $levels[$index++] ?? $levels[0],
                         array_merge(
@@ -86,6 +114,11 @@ trait ApieModelTrait
                             [$relation_key]
                         )
                     );
+
+                    if (class_exists($relation_class) && method_exists(new $relation_class, $after_scope)) {
+                        $query->{$after}();
+                    }
+
                 };
             }
         }
@@ -131,6 +164,11 @@ trait ApieModelTrait
                      ->getColumnListing($this->getTable())
             )
         );
+    }
+
+    private static function getApieClass(string $class) : string
+    {
+        return config('apie.models_path').str_singular(studly_case($class));
     }
 
 }
