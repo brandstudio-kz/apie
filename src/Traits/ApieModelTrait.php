@@ -32,10 +32,9 @@ trait ApieModelTrait
         $relations_query = [];
 
         foreach($relations as $relation) {
-            $relation_key = $this->getTable()."_".$relation;
-            if (count($relation_stack)>8) {
-                dd($relation_stack);
-            }
+            $relation_key = [$this->getTable(), str_plural($relation)];
+            sort($relation_key);
+            $relation_key = implode('_', $relation_key);
             if (!in_array($relation_key, $relation_stack)) {
                 $relations_query[$relation] = function($query) use ($index, $levels, $relation_key, $relation_stack) {
                     $query->level(
