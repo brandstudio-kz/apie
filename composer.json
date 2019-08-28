@@ -38,12 +38,12 @@
     "extra": {
         "laravel": {
             "providers": [
-                "BrandStudio\\Recaptcha\\ApieServiceProvider"
+                "BrandStudio\\Recaptcha\\LaravelApieServiceProvider"
             ]
         },
         "lumen": {
             "providers": [
-                "BrandStudio\\Recaptcha\\ApieServiceProvider"
+                "BrandStudio\\Recaptcha\\LumenApieServiceProvider"
             ]
         }
     }
