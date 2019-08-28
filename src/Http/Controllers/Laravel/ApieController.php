@@ -47,7 +47,7 @@ class ApieController extends Controller
     private function validateModel(string $model, string $class)
     {
         if (!class_exists($class) || !in_array($model, config('apie.models'))) {
-            return abort(400, "Invalid request class {$class} not found!");
+            return abort(400, "Invalid request class {$model}({$class}) not found!");
         }
     }
 
