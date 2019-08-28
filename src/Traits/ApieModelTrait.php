@@ -5,6 +5,30 @@ namespace BrandStudio\Apie\Traits;
 trait ApieModelTrait
 {
 
+    public static function getApieLevelsParsed() : array
+    {
+        $levels = static::getApieLevels();
+
+        foreach($levels as $level=>$values) {
+            $level_data = [];
+            foreach($values as $value) {
+                $raw = array_map('trim', explode(':', $value));
+                $name = $raw[0];
+                $type = $raw[1] ?? 'string';
+
+                preg_match('/^(.*)\[(.*)\]$/', $type, $match);
+                if ($match) {
+                    $type = $match[1];
+                    $level_data[$name]['model'] = $match[2];
+                }
+
+                $level_data[$name]['type'] = $type;
+            }
+            $levels[$level] = $level_data;
+        }
+        return $levels;
+    }
+
     public static function getApieLevel(string $level) : array
     {
         return static::getApieLevels()[$level];

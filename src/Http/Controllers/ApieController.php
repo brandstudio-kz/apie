@@ -38,7 +38,7 @@ class ApieController extends Controller
         $models = config('apie.models');
         foreach($models as $model) {
             $class = $this->getClassPath($model);
-            $data[$model] = $class::LEVELS;
+            $data[$model] = $class::getApieLevelsParsed();
         }
 
         return $data;
