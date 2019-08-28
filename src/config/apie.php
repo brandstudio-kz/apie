@@ -1,6 +1,7 @@
 <?php
 
 return [
+    'route_middlewares' => [],
     'route_prefix' => env('APIE_PREFIX', 'apie'),
     'documentation_route' => env('APIE_DOCUMENTATION', ''),
 
