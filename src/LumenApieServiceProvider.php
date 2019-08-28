@@ -17,7 +17,7 @@ class LumenApieServiceProvider extends ServiceProvider
             include __DIR__.'/routes/Lumen/apie.php';
         });
 
-        $this->app->make('BrandStudio\Apie\Http\Controllers\ApieController');
+        $this->app->make('BrandStudio\Apie\Http\Controllers\Lumen\ApieController');
     }
 
     public function boot()

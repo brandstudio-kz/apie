@@ -1,8 +1,8 @@
 <?php
 
-namespace BrandStudio\Apie\Http\Controllers;
+namespace BrandStudio\Apie\Http\Controllers\Laravel;
 
-use Laravel\Lumen\Routing\Controller;
+use Illuminate\Routing\Controller;
 use Illuminate\Http\Request;
 
 class ApieController extends Controller
@@ -35,7 +35,7 @@ class ApieController extends Controller
     public function documentation(Request $request)
     {
         $data = [];
-        $models = config('apie.models');
+        $models = config('apie.models') ?? [];
         foreach($models as $model) {
             $class = $this->getClassPath($model);
             $data[$model] = $class::getApieLevelsParsed();
