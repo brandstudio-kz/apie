@@ -10,7 +10,7 @@ class LumenApieServiceProvider extends ServiceProvider
     public function register()
     {
         $this->app->router->group([
-            'namespace' => 'BrandStudio\Apie\Http\Controllers',
+            'namespace' => 'BrandStudio\Apie\Http\Controllers\Lumen',
             'prefix' => config('apie.route_prefix'),
             'middleware' => config('apie.route_middlewares'),
         ], function ($router) {

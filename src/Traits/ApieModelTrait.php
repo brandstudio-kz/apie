@@ -61,7 +61,7 @@ trait ApieModelTrait
 
     public static function getApieLevel(string $level) : array
     {
-        return static::getApieLevels()[$level];
+        return static::getApieLevels()[$level] ?? static::getApieLevels()[config('apie.default_level')] ?? [];
     }
 
     public static function getApieLevelAttributeNames($level) : array
@@ -108,7 +108,7 @@ trait ApieModelTrait
                     }
 
                     $query->level(
-                        $levels[$index++] ?? $levels[0],
+                        $levels[$index++] ?? config('apie.default_level'),
                         array_merge(
                             $relation_stack,
                             [$relation_key]
