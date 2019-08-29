@@ -114,7 +114,6 @@ trait ApieModelTrait
                             [$relation_key]
                         )
                     );
-
                     if (class_exists($relation_class) && method_exists(new $relation_class, $after_scope)) {
                         $query->{$after}();
                     }
