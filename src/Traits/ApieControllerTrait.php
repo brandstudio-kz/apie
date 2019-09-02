@@ -22,17 +22,23 @@ trait ApieControllerTrait
     public function index(Request $request)
     {
         $this->init($request);
+        $order_by = $request->order_by ?? 'id';
+        $order = $request->order ?? 'asc';
 
         $query = $this->class::apieQuery();
 
         $filters = $request->all();
         unset($filters['levels']);
+        unset($filters['per_page']);
+        unset($filters['order_by']);
+        unset($filters['order']);
         $query->where($filters);
 
         $query->level($this->levels);
+        $query->orderBy($order_by, $order);
 
         $per_page = $request->per_page ?? $query->count();
-        return $query->paginate($per_page);
+        return response()->json($query->paginate($per_page));
     }
 
     public function show(Request $request, $id)
@@ -43,21 +49,24 @@ trait ApieControllerTrait
         $query->where('id', $id);
         $query->level($this->levels);
 
-        return $query->firstOrFail();
+        return response()->json($query->firstOrFail());
     }
 
     public function store(Request $request)
     {
         $this->init($request);
-        return $this->class::create($request->all());
+        $model = $this->class::create($request->all());
+        return response()->json($model);
     }
 
     public function update(Request $request, $id)
     {
+        $this->init($request);
         $query = $this->class::apieQuery();
         $query->where('id', $id);
         $model = $query->firstOrFail();
-        return $model->update($request->all());
+        $model->update($request->all());
+        return response()->json($model);
     }
 
     public function destroy(Request $request, $id)
@@ -66,7 +75,8 @@ trait ApieControllerTrait
         $query = $this->class::apieQuery();
         $query->where('id', $id);
         $model = $query->firstOrFail();
-        return $model->delete();
+        $model->delete();
+        return response()->json(null, 204);
     }
 
     public function documentation(Request $request)
