@@ -87,7 +87,7 @@ trait ApieControllerTrait
             $class = $this->getClassPath($model);
             $data[$model] = $class::getApieLevelsParsed();
         }
-
+        return $data;
         return view('apie.documentation', ['data' => $data]);
     }
 
