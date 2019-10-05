@@ -56,7 +56,7 @@ trait ApieControllerTrait
         return response()->json($query->paginate($per_page));
     }
 
-    public function show(Request $request, $id)
+    public function show(Request $request, $table, $id)
     {
         $this->init($request);
 
@@ -74,7 +74,7 @@ trait ApieControllerTrait
         return response()->json($model);
     }
 
-    public function update(Request $request, $id)
+    public function update(Request $request, $table, $id)
     {
         $this->init($request);
         $query = $this->class::apieQuery();
@@ -84,7 +84,7 @@ trait ApieControllerTrait
         return response()->json($model);
     }
 
-    public function destroy(Request $request, $id)
+    public function destroy(Request $request, $table, $id)
     {
         $this->init($request);
         $query = $this->class::apieQuery();
