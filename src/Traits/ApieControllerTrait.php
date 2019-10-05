@@ -32,7 +32,22 @@ trait ApieControllerTrait
         unset($filters['per_page']);
         unset($filters['order_by']);
         unset($filters['order']);
-        $query->where($filters);
+        unset($filters['has']);
+        foreach($filters as $key => $filter) {
+            if (is_array($filter)) {
+                $query->whereIn($key, array_values($filter));
+            }
+            else {
+                $query->where($key, $filter);
+            }
+        }
+
+        $hasFilters = $request->has ?? [];
+        foreach($hasFilters as $has) {
+            $query->whereHas($has, function($query) {
+                $query->apie();
+            });
+        }
 
         $query->level($this->levels);
         $query->orderBy($order_by, $order);
@@ -45,7 +60,7 @@ trait ApieControllerTrait
     {
         $this->init($request);
 
-        $query = $this->class::apieQuery();
+        $query = $this->class::apieShowQuery();
         $query->where('id', $id);
         $query->level($this->levels);
 
@@ -81,6 +96,11 @@ trait ApieControllerTrait
 
     public function documentation(Request $request)
     {
+        return view('apie.documentation');
+    }
+
+    public function documentationRaw(Request $request)
+    {
         $data = [];
         $models = config('apie.models');
         foreach($models as $model) {
@@ -88,7 +108,6 @@ trait ApieControllerTrait
             $data[$model] = $class::getApieLevelsParsed();
         }
         return $data;
-        return view('apie.documentation', ['data' => $data]);
     }
 
 

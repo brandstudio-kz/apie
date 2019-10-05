@@ -7,7 +7,17 @@ trait ApieModelTrait
 
     public static function apieQuery()
     {
-        return static::query();
+        return static::apie();
+    }
+
+    public static function apieShowQuery()
+    {
+        return static::apieQuery();
+    }
+
+    public function scopeApie($query)
+    {
+        //
     }
 
     public function scopeBeforeLevel($query, array $attributes, array $relations, array $relation_stack = [])
@@ -72,7 +82,7 @@ trait ApieModelTrait
 
             if (!in_array($relation_key, $relation_stack)) {
                 $relations_query[$relation] = function($query) use ($index, $levels, $relation_key, $relation_stack, $relation_class) {
-
+                    $query->apie();
                     $class_name = class_basename(static::class);
 
                     $before_scope = "scopeBefore{$class_name}Relation";
@@ -85,7 +95,7 @@ trait ApieModelTrait
                     }
 
                     $query->level(
-                        $levels[$index++] ?? config('apie.default_level'),
+                        $levels[$index++] ?? $levels[0],
                         array_merge(
                             $relation_stack,
                             [$relation_key]
