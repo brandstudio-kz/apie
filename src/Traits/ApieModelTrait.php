@@ -76,7 +76,7 @@ trait ApieModelTrait
 
             $relation_class = static::getApieClass($relation);
 
-            $relation_key = [$this->getTable(), str_plural($relation)];
+            $relation_key = [$this->getTable(), \Str::plural($relation)];
             sort($relation_key);
             $relation_key = implode('_', $relation_key);
 
@@ -179,7 +179,7 @@ trait ApieModelTrait
 
     private static function getApieClass(string $class) : string
     {
-        return config('apie.models_path').str_singular(studly_case($class));
+        return config('apie.models_path').\Str::singular(\Str::studly($class));
     }
 
 }

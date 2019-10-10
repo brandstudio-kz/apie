@@ -126,7 +126,7 @@ trait ApieControllerTrait
 
     private function getClassName(string $name) : string
     {
-        return studly_case(str_singular($name));
+        return \Str::studly(\Str::singular($name));
     }
 
 }
