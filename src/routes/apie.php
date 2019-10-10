@@ -11,6 +11,7 @@ Route::group([
     Route::delete('{table}/{id}', 'ApieController@destroy');
 
     Route::get(config('apie.documentation_route'), 'ApieController@documentation');
+    Route::get(config('apie.documentation_route').'/raw', 'ApieController@documentationRaw');
 
     Route::get('search/{table}', 'ApieController@search');
     Route::get('search', 'ApieController@globalSearch');
