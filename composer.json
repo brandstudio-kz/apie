@@ -1,9 +1,7 @@
 {
     "name": "brandstudio/apie",
-    "description": "BrandStudio Lumen api template",
+    "description": "BrandStudio api template",
     "keywords": [
-        "Lumen",
-        "Lumen api",
         "Brandstudio"
     ],
     "license": "MIT",
@@ -38,13 +36,8 @@
     "extra": {
         "laravel": {
             "providers": [
-                "BrandStudio\\Apie\\LaravelApieServiceProvider"
+                "BrandStudio\\Apie\\ApieServiceProvider"
             ]
         },
-        "lumen": {
-            "providers": [
-                "BrandStudio\\Apie\\LumenApieServiceProvider"
-            ]
-        }
     }
 }

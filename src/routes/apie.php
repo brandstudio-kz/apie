@@ -1,7 +1,7 @@
 <?php
 
 Route::group([
-    'namespace' => 'BrandStudio\Apie\Http\Controllers\Laravel',
+    'namespace' => 'BrandStudio\Apie\Http\Controllers',
     'prefix' => config('apie.route_prefix')
 ], function() {
     Route::get('{table}', 'ApieController@index');

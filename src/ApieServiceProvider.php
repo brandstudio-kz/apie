@@ -4,7 +4,7 @@ namespace BrandStudio\Apie;
 
 use Illuminate\Support\ServiceProvider;
 
-class LaravelApieServiceProvider extends ServiceProvider
+class ApieServiceProvider extends ServiceProvider
 {
 
     public function register()
@@ -12,13 +12,11 @@ class LaravelApieServiceProvider extends ServiceProvider
         $this->mergeConfigFrom(
             __DIR__.'/config/apie.php', 'apie'
         );
-        // dd(config('apie'));
-        // $this->app->make('BrandStudio\Apie\Http\Controllers\Laravel\ApieController');
     }
 
     public function boot()
     {
-        $this->loadRoutesFrom(__DIR__.'/routes/Laravel/apie.php');
+        $this->loadRoutesFrom(__DIR__.'/routes/apie.php');
 
         $this->publishes([
             __DIR__.'/config/apie.php' => config_path('apie.php')
