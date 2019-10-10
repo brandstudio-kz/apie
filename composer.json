@@ -38,6 +38,6 @@
             "providers": [
                 "BrandStudio\\Apie\\ApieServiceProvider"
             ]
-        },
+        }
     }
 }
