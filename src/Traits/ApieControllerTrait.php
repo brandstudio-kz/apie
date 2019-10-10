@@ -96,7 +96,7 @@ trait ApieControllerTrait
 
     public function documentation(Request $request)
     {
-        return view('apie.documentation');
+        return view('brandstudio::apie.documentation');
     }
 
     public function documentationRaw(Request $request)
