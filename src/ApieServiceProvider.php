@@ -12,12 +12,13 @@ class ApieServiceProvider extends ServiceProvider
         $this->mergeConfigFrom(
             __DIR__.'/config/apie.php', 'apie'
         );
+
+        $this->loadRoutesFrom(__DIR__.'/routes/apie.php');
     }
 
     public function boot()
     {
         $this->loadViewsFrom(__DIR__.'/resources/views', 'brandstudio');
-        $this->loadRoutesFrom(__DIR__.'/routes/apie.php');
 
         $this->publishes([
             __DIR__.'/config/apie.php' => config_path('apie.php')
