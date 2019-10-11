@@ -2,7 +2,8 @@
 
 Route::group([
     'namespace' => 'BrandStudio\Apie\Http\Controllers',
-    'prefix' => config('apie.route_prefix')
+    'prefix' => config('apie.route_prefix'),
+    'middleware' => config('apie.route_middlewares'),
 ], function() {
 
     $models = array_map('strtolower', config('apie.models'));
