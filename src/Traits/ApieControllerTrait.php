@@ -32,7 +32,9 @@ trait ApieControllerTrait
         unset($filters['per_page']);
         unset($filters['order_by']);
         unset($filters['order']);
+        unset($filters['page']);
         unset($filters['has']);
+        
         foreach($filters as $key => $filter) {
             if (is_array($filter)) {
                 $query->whereIn($key, array_values($filter));
