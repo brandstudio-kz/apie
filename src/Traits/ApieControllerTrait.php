@@ -30,16 +30,23 @@ trait ApieControllerTrait
         $filters = $request->all();
         unset($filters['levels']);
         unset($filters['per_page']);
+        unset($filters['page']);
         unset($filters['order_by']);
         unset($filters['order']);
-        unset($filters['page']);
         unset($filters['has']);
-        
         foreach($filters as $key => $filter) {
             if (is_array($filter)) {
                 $query->whereIn($key, array_values($filter));
-            }
-            else {
+            } else if (in_array(substr($key, -1), ['>', '<'])) {
+                $query->where(substr($key, 0, -1), substr($key, -1), $filter);
+            } else if (in_array(substr($key, -2)), ['>=', '<=']) {
+                $query->where(substr($key, 0, -2), substr($key, -2), $filter);
+            } else if (substr($key, -2) == '!=') {
+                $query->where(function($q) {
+                    $q  ->where($key, '!=', $filter)
+                        ->orWhereNull(substr($key, 0, -2));
+                });
+            } else {
                 $query->where($key, $filter);
             }
         }
