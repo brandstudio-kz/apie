@@ -39,7 +39,7 @@ trait ApieControllerTrait
                 $query->whereIn($key, array_values($filter));
             } else if (in_array(substr($key, -1), ['>', '<'])) {
                 $query->where(substr($key, 0, -1), substr($key, -1), $filter);
-            } else if (in_array(substr($key, -2)), ['>=', '<=']) {
+            } else if (in_array(substr($key, -2), ['>=', '<='])) {
                 $query->where(substr($key, 0, -2), substr($key, -2), $filter);
             } else if (substr($key, -2) == '!=') {
                 $query->where(function($q) {
