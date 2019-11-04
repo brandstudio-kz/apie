@@ -57,7 +57,12 @@ trait ApieControllerTrait
                 $rel = json_decode($has, true);
                 foreach($rel as $key=>$value) {
                     $query->whereHas($key, function($query) use($value) {
-                        $query->where('id', $value)->apie();
+                        if (is_array($value)) {
+                            $query->whereIn('id', $value)->apie();
+                        }
+                        else {
+                            $query->where('id', $value)->apie();
+                        }
                     });
                 }
             }
