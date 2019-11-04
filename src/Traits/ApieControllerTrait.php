@@ -53,9 +53,19 @@ trait ApieControllerTrait
 
         $hasFilters = $request->has ?? [];
         foreach($hasFilters as $has) {
-            $query->whereHas($has, function($query) {
-                $query->apie();
-            });
+            if (json_decode($has)) {
+                $rel = json_decode($has, true);
+                foreach($rel as $key=>$value) {
+                    $query->whereHas($key, function($query) use($value) {
+                        $query->where('id', $value)->apie();
+                    });
+                }
+            }
+            else {
+                $query->whereHas($has, function($query) {
+                    $query->apie();
+                });
+            }
         }
 
         $query->level($this->levels);
