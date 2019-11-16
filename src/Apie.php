@@ -16,8 +16,7 @@ class Apie
     private static function getModelClass($model)
     {
         foreach(config('brandstudio.apie.models') as $item) {
-            $model_chunks = explode("\\", $item);
-            if (strtolower(end($model_chunks)) == $model) {
+            if (strtolower(class_basename($item)) == $model) {
                 return $item;
             }
         }
