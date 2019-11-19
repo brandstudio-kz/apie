@@ -13,7 +13,7 @@ class ApieController extends Controller
     {
         $response = Apie::model($model)
                         ->select($request->toArray())
-                        ->get();
+                        ->get($request->pagination ?? []);
 
         return response()->json($response);
     }

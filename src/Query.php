@@ -29,7 +29,7 @@ class Query
 
     public function insert($data)
     {
-        return static::applyInsert($this->class, $data);
+        return static::applyInsert($this->class, $this->query, $data);
     }
 
     public function update($data) : self
@@ -44,6 +44,20 @@ class Query
         static::applyDelete($this->query, $data);
 
         return $this;
+    }
+
+    public function get(array $pagination)
+    {
+        if (isset($pagination['per_page'])) {
+            if ($pagination['per_page'] == 1) {
+                return $this->query->first();
+            } else {
+                $page = $pagination['page'] ?? 1;
+                return $this->query->paginate($pagination['per_page']);
+            }
+        } else {
+            return $this->query->get();
+        }
     }
 
     public function __call($method, $arguments)
