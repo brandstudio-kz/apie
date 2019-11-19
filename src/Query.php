@@ -48,6 +48,9 @@ class Query
 
     public function get(array $pagination)
     {
+        if (isset($pagination['count'])) {
+            return $this->query->count();
+        }
         if (isset($pagination['per_page'])) {
             if ($pagination['per_page'] == 1) {
                 return $this->query->first();

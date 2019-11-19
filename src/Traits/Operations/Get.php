@@ -21,12 +21,24 @@ trait Get
     public static function applyWith(&$query, $fields)
     {
         foreach($fields as $key => $field) {
+            $with = 'with';
+            if (isset($field['count'])) {
+                if ($field['count']) {
+                    $with = 'withCount';
+                }
+                unset($field['count']);
+            }
+
             if (is_string($key)) {
-                $query->with([$key => function($q) use($field) {
-                    static::applyGet($q, $field);
-                }]);
+                if (is_array($field) && count($field)) {
+                    $query->{$with}([$key => function($q) use($field) {
+                        static::applyGet($q, $field);
+                    }]);
+                } else {
+                    $query->{$with}($key);
+                }
             } else if (is_string($field)) {
-                $query->with($field);
+                $query->{$with}($field);
             }
         }
     }
