@@ -29,7 +29,7 @@ class Query
 
     public function insert($data)
     {
-        return static::applyInsert($this->class, $this->query, $data);
+        return static::applyInsert($this->class, $data);
     }
 
     public function update($data) : self

@@ -10,7 +10,10 @@ class Apie
 
     public static function model(string $model)
     {
-        return new Query(static::getModelClass($model));
+        if (!class_exists($model)) {
+            $model = static::getModelClass($model);
+        }
+        return new Query($model);
     }
 
     private static function getModelClass($model)
