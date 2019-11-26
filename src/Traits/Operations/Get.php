@@ -62,7 +62,7 @@ trait Get
                 if (!is_array($filter)) {
                     $query->where($key, $filter);
                 } else {
-                    if (!is_array($filter[0]) && (array_keys($filter) === range(0, count($filter) - 1) || array() === $filter)) {// If array is not associative
+                    if (!is_array($filter[0] ?? '') && (array_keys($filter) === range(0, count($filter) - 1) || array() === $filter)) {// If array is not associative
                         $query->whereIn($key, $filter);
                     } else {
                         $query->whereHas($key, function($q) use($filter) {

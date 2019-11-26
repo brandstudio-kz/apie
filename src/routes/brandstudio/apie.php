@@ -31,7 +31,7 @@ Route::group([
     // Rest
     Route::get('{table}', 'ApieController@index')->where(['table' => $models]);
     Route::post('{table}', 'ApieController@store')->where(['table' => $models]);
-    Route::get('{table}/{id}', 'ApieController@show')->where(['table' => $models, 'id' => '[0-9]+']);
-    Route::put('{table}/{id}', 'ApieController@update')->where(['table' => $models, 'id' => '[0-9]+']);
-    Route::delete('{table}/{id}', 'ApieController@delete')->where(['table' => $models, 'id' => '[0-9]+']);
+    Route::get('{table}/{id?}', 'ApieController@show')->where(['table' => $models, 'id' => '[0-9]+']);
+    Route::put('{table}/{id?}', 'ApieController@update')->where(['table' => $models, 'id' => '[0-9]+']);
+    Route::delete('{table}/{id?}', 'ApieController@delete')->where(['table' => $models, 'id' => '[0-9]+']);
 });

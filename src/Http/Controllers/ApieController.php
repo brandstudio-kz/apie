@@ -18,7 +18,7 @@ class ApieController extends Controller
         return response()->json($response);
     }
 
-    public function show(Request $request, string $model, int $id)
+    public function show(Request $request, string $model)
     {
         $response = Apie::model($model)
                         ->select($request->toArray())
@@ -38,9 +38,10 @@ class ApieController extends Controller
         return response()->json([$model, $id]);
     }
 
-    public function delete(Request $request, string $model, int $id)
+    public function delete(Request $request, string $model)
     {
-        return response()->json([$model, $id]);
+        $response = Apie::model($model)->delete($request->toArray());
+        return response()->json($response);
     }
 
     public function search(Request $request, string $model)
