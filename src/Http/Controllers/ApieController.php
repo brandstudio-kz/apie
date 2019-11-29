@@ -4,7 +4,9 @@ namespace BrandStudio\Apie\Http\Controllers;
 
 use Illuminate\Routing\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Database\Eloquent\Collection;
 use BrandStudio\Apie\Apie;
+
 
 class ApieController extends Controller
 {
@@ -18,7 +20,7 @@ class ApieController extends Controller
         return response()->json($response);
     }
 
-    public function show(Request $request, string $model)
+    public function show(Request $request, string $model, $id)
     {
         $response = Apie::model($model)
                         ->select($request->toArray())
@@ -35,7 +37,17 @@ class ApieController extends Controller
 
     public function update(Request $request, string $model)
     {
-        return response()->json([$model, $id]);
+        $response = Apie::model($model)
+                        ->select($request->toArray())
+                        ->get($request->pagination ?? []);
+        if ($response instanceof Collection) {
+            $response = $response->each(function($item) use($request) {
+                $item->update($request->toArray());
+            });
+        } else {
+            $response = $response->update($request->toArray());
+        }
+        return response()->json($response);
     }
 
     public function delete(Request $request, string $model)
