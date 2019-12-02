@@ -7,8 +7,13 @@ trait Get
 
     public static function applyGet(&$query, array $data)
     {
-        static::applyFilters($query, $data['where'] ?? []);
+        $query->where(function($q) use($data) {
+            static::applyFilters($q, $data['where'] ?? []);
+        });
         static::applyOrderBy($query, $data['order'] ?? []);
+        if (isset($data['group_by'])) {
+          $query->groupBy($data['group_by']);
+        }
         static::applySelect($query, $data['select'] ?? '*');
         static::applyWith($query, $data['with'] ?? []);
     }
@@ -47,9 +52,11 @@ trait Get
     {
         foreach($order as $key => $direction) {
             if (is_numeric($key)) {
-                $query->orderBy($direction);
+                $query->orderBy(\DB::raw("0+{$direction}"));
+                $query->orderBy(\DB::raw("{$direction}"));
             } else {
-                $query->orderBy($key, $direction);
+                $query->orderBy(\DB::raw("0+{$key}"), $direction);
+                $query->orderBy(\DB::raw("{$key}"), $direction);
             }
         }
 
