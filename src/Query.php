@@ -46,6 +46,11 @@ class Query
         return $this;
     }
 
+    public function search(string $query)
+    {
+        return $this->class::search($query);
+    }
+
     public function get(array $pagination)
     {
         if (isset($pagination['count'])) {

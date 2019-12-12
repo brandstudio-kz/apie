@@ -37,15 +37,20 @@ class ApieController extends Controller
 
     public function update(Request $request, string $model)
     {
+        $req = $request->toArray();
         $response = Apie::model($model)
-                        ->select($request->toArray())
+                        ->select($req)
                         ->get($request->pagination ?? []);
+
+        unset($req['where']);
+        unset($req['with']);
+        unset($req['pagination']);
         if ($response instanceof Collection) {
-            $response = $response->each(function($item) use($request) {
-                $item->update($request->toArray());
+            $response = $response->each(function($item) use($req) {
+                $item->update($req);
             });
         } else {
-            $response = $response->update($request->toArray());
+            $response = $response->update($req);
         }
         return response()->json($response);
     }
@@ -58,7 +63,8 @@ class ApieController extends Controller
 
     public function search(Request $request, string $model)
     {
-        return response()->json([$model]);
+        $response = Apie::model($model)->search($request->q)->get();
+        return response()->json($response);
     }
 
     public function globalSearch(Request $request)
