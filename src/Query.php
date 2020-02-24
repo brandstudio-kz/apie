@@ -18,6 +18,9 @@ class Query
     {
         $this->class = $class;
         $this->query = $class::query();
+        if (method_exists($class, 'scopeActive')) {
+            $this->query->active();
+        }
     }
 
     public function select($data) : self
